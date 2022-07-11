@@ -62,7 +62,7 @@ func (d *deliveryTokoSampah) GetTokoSampahById(c *gin.Context) {
 }
 
 func (d *deliveryTokoSampah) UpdateTokoSampah(c *gin.Context) {
-	idUser := c.MustGet("id_user").(int)
+	idUser := c.MustGet("id").(int)
 	idToko := c.Param("id")
 	id, err := strconv.Atoi(idToko)
 	if err != nil {
@@ -93,7 +93,7 @@ func (d *deliveryTokoSampah) UpdateTokoSampah(c *gin.Context) {
 }
 
 func (d *deliveryTokoSampah) GetTokoByIdUser(c *gin.Context) {
-	idUser := c.MustGet("id_user").(int)
+	idUser := c.MustGet("id").(int)
 	data, err := d.TokoSampahService.GetTokoByIdUser(uint(idUser))
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))

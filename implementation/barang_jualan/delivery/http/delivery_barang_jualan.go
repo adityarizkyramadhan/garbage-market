@@ -14,11 +14,15 @@ import (
 )
 
 type handlerBarangJualan struct {
-	service domain.BarangJualanService
+	service     domain.BarangJualanService
+	serviceToko domain.TokoSampahService
 }
 
-func NewHandlerBarangJualan(service domain.BarangJualanService) domain.HandlerBarangJualan {
-	return &handlerBarangJualan{service}
+func NewHandlerBarangJualan(service domain.BarangJualanService, serviceToko domain.TokoSampahService) domain.HandlerBarangJualan {
+	return &handlerBarangJualan{
+		service:     service,
+		serviceToko: serviceToko,
+	}
 }
 
 func (h *handlerBarangJualan) CreateBarangJualan(c *gin.Context) {
@@ -34,6 +38,12 @@ func (h *handlerBarangJualan) CreateBarangJualan(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when get file", err.Error()))
 		return
 	}
+	idUser := c.MustGet("id_user").(int)
+	idToko, err := h.serviceToko.GetTokoByIdUser(uint(idUser))
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
+		return
+	}
 	file, err := fileInput.Open()
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when open file", err.Error()))
@@ -45,12 +55,13 @@ func (h *handlerBarangJualan) CreateBarangJualan(c *gin.Context) {
 	client.UploadFile("foto-proker", fileName, file)
 	linkImage := utils.GenerateLinkImage(fileName)
 	barang := &domain.BarangJualan{
-		NamaBarang:  namaBarang,
-		HargaBarang: hargaBarangInt,
-		StokBarang:  stokBarangInt,
-		TipeBarang:  tipeBarang,
-		Deskripsi:   deskripsi,
-		LinkFoto:    linkImage,
+		NamaBarang:   namaBarang,
+		HargaBarang:  hargaBarangInt,
+		StokBarang:   stokBarangInt,
+		TipeBarang:   tipeBarang,
+		Deskripsi:    deskripsi,
+		LinkFoto:     linkImage,
+		IdTokoSampah: int(idToko.ID),
 	}
 	if err := h.service.CreateBarangJualan(barang); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when create barang jualan", err.Error()))

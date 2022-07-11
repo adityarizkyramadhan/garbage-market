@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func RouteBasket(r gin.RouterGroup, db *gorm.DB) {
+func RouteBasket(r *gin.RouterGroup, db *gorm.DB) {
 	service := postgres.NewbasketService(db)
 	handler := http.NewHandlerBasket(service)
 	r.POST("/newbasket", middleware.ValidateJWToken(), handler.CreateBasketJualan)

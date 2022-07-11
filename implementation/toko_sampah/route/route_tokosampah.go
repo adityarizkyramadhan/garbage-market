@@ -8,11 +8,11 @@ import (
 	"gorm.io/gorm"
 )
 
-func RouteTokoSampah(r gin.RouterGroup, db *gorm.DB) {
+func RouteTokoSampah(r *gin.RouterGroup, db *gorm.DB) {
 	service := postgres.NewTokoSampahService(db)
 	handler := http.NewDeliveryTokoSampah(service)
 	r.POST("/newtokosampah", middleware.ValidateJWToken(), handler.CreateTokoSampah)
 	r.POST("/updatetokosampah", middleware.ValidateJWToken(), handler.UpdateTokoSampah)
-	r.GET("/tokosampah/:id", middleware.ValidateJWToken(), handler.GetTokoSampahById)
-	r.GET("/tokosampah/:iduser", middleware.ValidateJWToken(), handler.GetTokoByIdUser)
+	r.GET("/:id", middleware.ValidateJWToken(), handler.GetTokoSampahById)
+	r.GET("/user", middleware.ValidateJWToken(), handler.GetTokoByIdUser)
 }

@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func RouteMetaData(r gin.RouterGroup, db *gorm.DB) {
+func RouteMetaData(r *gin.RouterGroup, db *gorm.DB) {
 	service := _dbMetadata.NewMetaDataService(db)
 	handler := _handlerMetadata.NewDeliveryMetadata(service)
 	r.POST("/login", handler.Login)

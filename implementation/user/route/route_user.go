@@ -8,10 +8,10 @@ import (
 	"gorm.io/gorm"
 )
 
-func RouteMetaData(r gin.RouterGroup, db *gorm.DB) {
+func RouteUser(r *gin.RouterGroup, db *gorm.DB) {
 	service := postgres.NewUserService(db)
 	handler := http.NewDeliveryUser(service)
 	r.POST("/newuser", middleware.ValidateJWToken(), handler.CreateUser)
 	r.POST("/update", middleware.ValidateJWToken(), handler.UpdateUser)
-	r.POST("/user/:id", middleware.ValidateJWToken(), handler.GetUserById)
+	r.POST("/:id", middleware.ValidateJWToken(), handler.GetUserById)
 }
