@@ -1,1 +1,1 @@
-web: bin/garbage_market
+web: bin/garbage-market

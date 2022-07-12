@@ -1,1 +1,1 @@
-build: go build -o bin/garbage_market main.go
+build: go build -o bin/garbage-market main.go
