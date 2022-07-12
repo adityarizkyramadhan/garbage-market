@@ -12,6 +12,11 @@ func main() {
 	// Your code here...
 	r := gin.Default()
 	r.Use(middleware.CorsMiddleware())
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "Hello World!",
+		})
+	})
 	envDb, err := database_driver.ReadEnvSupabase()
 	if err != nil {
 		panic(err)
