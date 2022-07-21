@@ -22,7 +22,7 @@ func (t *tokoSampahService) CreateTokoSampah(toko *domain.TokoSampah) error {
 		return err
 	}
 	if data.IdMetaUser != 0 {
-		return errors.New("Toko sampah sudah ada")
+		return errors.New("toko sampah sudah ada")
 	}
 	return t.db.Create(toko).Error
 }
@@ -39,6 +39,6 @@ func (t *tokoSampahService) UpdateTokoSampah(toko *domain.TokoSampah) error {
 
 func (t *tokoSampahService) GetTokoByIdUser(idUser uint) (*domain.TokoSampah, error) {
 	toko := &domain.TokoSampah{}
-	err := t.db.Where("id_user = ?", idUser).First(toko).Error
+	err := t.db.Where("id_meta_user = ?", idUser).First(toko).Error
 	return toko, err
 }

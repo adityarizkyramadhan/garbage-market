@@ -42,7 +42,7 @@ func (d *deliveryTokoSampah) CreateTokoSampah(c *gin.Context) {
 }
 
 func (d *deliveryTokoSampah) GetTokoSampahById(c *gin.Context) {
-	idUser := c.MustGet("id_user").(int)
+	idUser := c.MustGet("id").(int)
 	idToko := c.Param("id")
 	id, err := strconv.Atoi(idToko)
 	if err != nil {

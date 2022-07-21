@@ -1,12 +1,13 @@
 package middleware
 
 import (
+	"net/http"
+	"strings"
+
 	"github.com/adityarizkyramadhan/garbage-market/infrastructure/app"
 	"github.com/adityarizkyramadhan/garbage-market/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
-	"net/http"
-	"strings"
 )
 
 func GenerateJWToken(id uint) (string, error) {

@@ -38,7 +38,8 @@ func (h *handlerBarangJualan) CreateBarangJualan(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when get file", err.Error()))
 		return
 	}
-	idUser := c.MustGet("id_user").(int)
+	idUser := c.MustGet("id").(float64)
+	fmt.Println(idUser)
 	idToko, err := h.serviceToko.GetTokoByIdUser(uint(idUser))
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
