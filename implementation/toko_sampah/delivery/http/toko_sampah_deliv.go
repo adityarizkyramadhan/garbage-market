@@ -23,7 +23,7 @@ type inputTokoSampah struct {
 }
 
 func (d *deliveryTokoSampah) CreateTokoSampah(c *gin.Context) {
-	idUser := c.MustGet("id_user").(int)
+	idUser := c.MustGet("id").(float64)
 	var input inputTokoSampah
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
@@ -32,7 +32,7 @@ func (d *deliveryTokoSampah) CreateTokoSampah(c *gin.Context) {
 	data := &domain.TokoSampah{
 		NamaToko:   input.NamaToko,
 		AlamatToko: input.AlamatToko,
-		IdUser:     idUser,
+		IdMetaUser: uint(idUser),
 	}
 	if err := d.TokoSampahService.CreateTokoSampah(data); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
@@ -54,7 +54,7 @@ func (d *deliveryTokoSampah) GetTokoSampahById(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
 		return
 	}
-	if data.IdUser != idUser {
+	if int(data.IdMetaUser) != idUser {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail("Tidak dapat mengakses data toko sampah ini", nil))
 		return
 	}
@@ -79,7 +79,7 @@ func (d *deliveryTokoSampah) UpdateTokoSampah(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
 		return
 	}
-	if data.IdUser != idUser {
+	if int(data.IdMetaUser) != idUser {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail("Tidak dapat mengakses data toko sampah ini", nil))
 		return
 	}

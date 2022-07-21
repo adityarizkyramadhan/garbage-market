@@ -5,11 +5,13 @@ import "github.com/gin-gonic/gin"
 type ServiceMetaData interface {
 	Register(user *MetaUser) (*MetaUser, error)
 	Login(email string) (*MetaUser, error)
+	GetUserById(id uint) (*MetaUser, error)
 }
 
 type HandlerMetaData interface {
 	Login(c *gin.Context)
 	Register(c *gin.Context)
+	GetUserById(c *gin.Context)
 }
 
 type ServiceUser interface {

@@ -1,6 +1,8 @@
 package postgres
 
 import (
+	"errors"
+
 	"github.com/adityarizkyramadhan/garbage-market/domain"
 	"gorm.io/gorm"
 )
@@ -15,10 +17,14 @@ func NewTokoSampahService(db *gorm.DB) *tokoSampahService {
 
 //Create new toko sampah
 func (t *tokoSampahService) CreateTokoSampah(toko *domain.TokoSampah) error {
-	if t.db.Where("id_user = ?", toko.IdUser).First(toko).RowsAffected == 0 {
-		return t.db.Create(toko).Error
+	data, err := t.GetTokoByIdUser(uint(toko.IdMetaUser))
+	if err == nil {
+		return err
 	}
-	return nil
+	if data.IdMetaUser != 0 {
+		return errors.New("Toko sampah sudah ada")
+	}
+	return t.db.Create(toko).Error
 }
 
 func (t *tokoSampahService) GetTokoSampahById(id uint) (*domain.TokoSampah, error) {

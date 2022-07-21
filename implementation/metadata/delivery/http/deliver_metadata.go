@@ -1,12 +1,14 @@
 package http
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/adityarizkyramadhan/garbage-market/domain"
 	"github.com/adityarizkyramadhan/garbage-market/middleware"
 	"github.com/adityarizkyramadhan/garbage-market/utils"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
-	"net/http"
 )
 
 type deliveryMetadata struct {
@@ -57,6 +59,10 @@ func (d *deliveryMetadata) Register(c *gin.Context) {
 		return
 	}
 	hashedPass, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail(err.Error(), nil))
+		return
+	}
 	data, err := d.pg.Register(&domain.MetaUser{
 		Email:    input.Email,
 		Password: string(hashedPass),
@@ -66,7 +72,25 @@ func (d *deliveryMetadata) Register(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), data))
 	}
 	token, err := middleware.GenerateJWToken(data.ID)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail(err.Error(), nil))
+		return
+	}
 	c.JSON(http.StatusCreated, utils.ResponseWhenSuccess("Login success", gin.H{
 		"token": token,
 	}))
+}
+
+func (d *deliveryMetadata) GetUserById(c *gin.Context) {
+	id := c.Param("id")
+	idInt, err := strconv.ParseUint(id, 10, 64)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
+		return
+	}
+	data, err := d.pg.GetUserById(uint(idInt))
+	if err != nil || data == nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), data))
+	}
+	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Get user by id success", data))
 }

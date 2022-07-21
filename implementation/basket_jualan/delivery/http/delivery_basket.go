@@ -28,7 +28,7 @@ func (b *handlerBasket) CreateBasketJualan(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
 		return
 	}
-	idUser := c.MustGet("id").(int)
+	idUser := c.MustGet("id").(uint)
 	idBarang := c.Param("id")
 	id, err := strconv.Atoi(idBarang)
 	if err != nil {
@@ -37,7 +37,7 @@ func (b *handlerBasket) CreateBasketJualan(c *gin.Context) {
 	}
 	data := &domain.BasketJualan{
 		JumlahBarang:   basket.JumlahBarang,
-		IdUser:         idUser,
+		IdMetaUser:     idUser,
 		IdBarangJualan: id,
 	}
 	if err := b.service.CreateBasketJualan(data); err != nil {
@@ -104,7 +104,7 @@ func (b *handlerBasket) UpdateBasketJualan(c *gin.Context) {
 	}
 	data := &domain.BasketJualan{
 		JumlahBarang:   basket.JumlahBarang,
-		IdUser:         c.MustGet("id").(int),
+		IdMetaUser:     c.MustGet("id").(uint),
 		IdBarangJualan: idBusket,
 	}
 	if err := b.service.UpdateBasketJualan(uint(idBusket), data); err != nil {

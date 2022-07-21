@@ -27,3 +27,9 @@ func (m *metaDataService) Login(email string) (*domain.MetaUser, error) {
 	err := m.db.Where("email = ? ", email).First(user).Error
 	return user, err
 }
+
+func (m *metaDataService) GetUserById(id uint) (*domain.MetaUser, error) {
+	user := &domain.MetaUser{}
+	err := m.db.Preload("TokoSampah").Preload("BasketJualans").Preload("PembayaranUsers").First(user, id).Error
+	return user, err
+}

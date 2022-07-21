@@ -49,7 +49,7 @@ func (d *deliveryPembayaran) CreatePembayaran(c *gin.Context) {
 	client.UploadFile("foto-proker", fileName, file)
 	linkImage := utils.GenerateLinkImage(fileName)
 	pembayaran := &domain.PembayaranUser{
-		IdUser:           idUser,
+		IdMetaUser:       uint(idUser),
 		IdBarangJualan:   id,
 		JumlahPembelian:  jumlahPembelianInt,
 		JumlahPembayaran: jumlahPembayaranInt,

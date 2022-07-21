@@ -11,8 +11,8 @@ import (
 func RouteBasket(r *gin.RouterGroup, db *gorm.DB) {
 	service := postgres.NewbasketService(db)
 	handler := http.NewHandlerBasket(service)
-	r.POST("/newbasket", middleware.ValidateJWToken(), handler.CreateBasketJualan)
-	r.POST("/updatebasket", middleware.ValidateJWToken(), handler.UpdateBasketJualan)
+	r.POST("/newbasket/:id", middleware.ValidateJWToken(), handler.CreateBasketJualan)
+	r.POST("/updatebasket/:id", middleware.ValidateJWToken(), handler.UpdateBasketJualan)
 	r.GET("/basket/:id", middleware.ValidateJWToken(), handler.GetBasketJualanById)
 	r.GET("/basket", middleware.ValidateJWToken(), handler.GetAllBasketJualanByUser)
 }

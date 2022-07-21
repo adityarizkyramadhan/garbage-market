@@ -23,6 +23,8 @@ func NewDeliveryUser(pg domain.ServiceUser) domain.HandlerUser {
 }
 
 func (d *deliveryUser) CreateUser(c *gin.Context) {
+	id := c.MustGet("id").(float64)
+	fmt.Println(id)
 	nama := c.Request.FormValue("nama")
 	tanggalLahir := c.Request.FormValue("tanggal_lahir")
 	gender := c.Request.FormValue("gender")
@@ -48,6 +50,7 @@ func (d *deliveryUser) CreateUser(c *gin.Context) {
 		Gender:       gender,
 		Alamat:       alamat,
 		LinkFoto:     linkImage,
+		IdMetaUser:   uint(id),
 	}
 	if err := d.pg.CreateUser(&user); err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, utils.ResponseWhenFail("Fail to save user", nil))

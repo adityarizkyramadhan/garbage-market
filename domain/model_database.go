@@ -4,28 +4,28 @@ import "gorm.io/gorm"
 
 type MetaUser struct {
 	gorm.Model
-	Email    string `json:"email"`
-	Password string `json:"-"`
-	Pin      string `json:"pin"`
-	User     User   `gorm:"foreignkey:IdMetaUser"`
+	Email           string           `json:"email"`
+	Password        string           `json:"-"`
+	Pin             string           `json:"pin"`
+	User            User             `gorm:"foreignkey:IdMetaUser"`
+	TokoSampah      TokoSampah       `gorm:"foreignkey:IdMetaUser"`
+	PembayaranUsers []PembayaranUser `gorm:"foreignkey:IdMetaUser"`
+	BasketJualans   []BasketJualan   `gorm:"foreignkey:IdMetaUser"`
 }
 
 type User struct {
 	gorm.Model
-	IdMetaUser      uint             `json:"id_meta_user"`
-	Nama            string           `json:"nama"`
-	TanggalLahir    string           `json:"tanggal_lahir"`
-	Alamat          string           `json:"alamat"`
-	Gender          string           `json:"gender"`
-	LinkFoto        string           `json:"link_foto"`
-	TokoSampah      TokoSampah       `gorm:"foreignkey:IdUser"`
-	PembayaranUsers []PembayaranUser `gorm:"foreignkey:IdUser"`
-	BasketJualans   []BasketJualan   `gorm:"foreignkey:IdUser"`
+	IdMetaUser   uint   `json:"id_meta_user"`
+	Nama         string `json:"nama"`
+	TanggalLahir string `json:"tanggal_lahir"`
+	Alamat       string `json:"alamat"`
+	Gender       string `json:"gender"`
+	LinkFoto     string `json:"link_foto"`
 }
 
 type TokoSampah struct {
 	gorm.Model
-	IdUser        int            `json:"id_user"`
+	IdMetaUser    uint           `json:"id_meta_user"`
 	NamaToko      string         `json:"nama_toko"`
 	AlamatToko    string         `json:"alamat_toko"`
 	BarangJualans []BarangJualan `gorm:"foreignkey:IdTokoSampah"`
@@ -44,7 +44,7 @@ type BarangJualan struct {
 
 type PembayaranUser struct {
 	gorm.Model
-	IdUser           int    `json:"id_user"`
+	IdMetaUser       uint   `json:"id_meta_user"`
 	IdBarangJualan   int    `json:"id_barang_jualan"`
 	JumlahPembelian  int    `json:"jumlah_pembelian"`
 	JumlahPembayaran int    `json:"jumlah_pembayaran"`
@@ -54,7 +54,7 @@ type PembayaranUser struct {
 
 type BasketJualan struct {
 	gorm.Model
-	IdUser         int `json:"id_user"`
-	IdBarangJualan int `json:"id_barang_jualan"`
-	JumlahBarang   int `json:"jumlah_barang"`
+	IdMetaUser     uint `json:"id_meta_user"`
+	IdBarangJualan int  `json:"id_barang_jualan"`
+	JumlahBarang   int  `json:"jumlah_barang"`
 }
