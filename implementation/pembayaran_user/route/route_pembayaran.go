@@ -11,7 +11,7 @@ import (
 func NewRoutePembayaran(r *gin.RouterGroup, db *gorm.DB) {
 	service := postgres.NewPembayaranService(db)
 	handler := http.NewDeliveryPembayaran(service)
-	r.POST("/", middleware.ValidateJWToken(), handler.CreatePembayaran)
+	r.POST("/:id", middleware.ValidateJWToken(), handler.CreatePembayaran)
 	r.GET("/:id", middleware.ValidateJWToken(), handler.GetPembayaranById)
 	r.GET("/user/:id", middleware.ValidateJWToken(), handler.GetPembayaranByIdUser)
 }
