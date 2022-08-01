@@ -27,6 +27,6 @@ func (p *pembayaranService) GetPembayaranById(id uint) (*domain.PembayaranUser, 
 
 func (p *pembayaranService) GetPembayaranByIdUser(id uint) (*[]domain.PembayaranUser, error) {
 	pembayaran := &[]domain.PembayaranUser{}
-	err := p.db.Where("id_user = ?", id).Find(pembayaran).Error
+	err := p.db.Where("id_meta_user = ?", id).Find(pembayaran).Error
 	return pembayaran, err
 }

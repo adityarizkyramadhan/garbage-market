@@ -13,5 +13,5 @@ func NewRoutePembayaran(r *gin.RouterGroup, db *gorm.DB) {
 	handler := http.NewDeliveryPembayaran(service)
 	r.POST("/:id", middleware.ValidateJWToken(), handler.CreatePembayaran)
 	r.GET("/:id", middleware.ValidateJWToken(), handler.GetPembayaranById)
-	r.GET("/user/:id", middleware.ValidateJWToken(), handler.GetPembayaranByIdUser)
+	r.GET("/user", middleware.ValidateJWToken(), handler.GetPembayaranByIdUser)
 }

@@ -79,7 +79,7 @@ func (d *deliveryPembayaran) GetPembayaranById(c *gin.Context) {
 }
 
 func (d *deliveryPembayaran) GetPembayaranByIdUser(c *gin.Context) {
-	id := c.MustGet("id").(int)
+	id := int(c.MustGet("id").(float64))
 	pembayaran, err := d.service.GetPembayaranByIdUser(uint(id))
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusNotFound, utils.ResponseWhenFail("Error when get pembayaran", err.Error()))
