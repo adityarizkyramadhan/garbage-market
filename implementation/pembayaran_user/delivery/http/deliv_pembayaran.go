@@ -22,7 +22,7 @@ func NewDeliveryPembayaran(service domain.PembayaranService) *deliveryPembayaran
 }
 
 func (d *deliveryPembayaran) CreatePembayaran(c *gin.Context) {
-	idUser := c.MustGet("id").(int)
+	idUser := int(c.MustGet("id").(float64))
 	idBarang := c.Param("id")
 	id, err := strconv.Atoi(idBarang)
 	if err != nil {
