@@ -59,13 +59,16 @@ type DeliveryBasket interface {
 type BarangJualanService interface {
 	CreateBarangJualan(barang *BarangJualan) error
 	GetBarangJualanById(id uint) (*BarangJualan, error)
+	GetBarangJualanAll() ([]*BarangJualan, error)
 	UpdateBarangJualan(barang *BarangJualan) error
-	DeleteBarangJualan(barang *BarangJualan) error
+	DeleteBarangJualan(id uint) error
 }
 
 type HandlerBarangJualan interface {
 	CreateBarangJualan(c *gin.Context)
 	GetBarangJualanById(c *gin.Context)
+	GetBarangJualanAll(c *gin.Context)
+	DeleteBarangJualan(c *gin.Context)
 }
 
 type PembayaranService interface {

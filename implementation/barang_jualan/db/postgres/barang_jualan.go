@@ -28,6 +28,13 @@ func (b *barangJualanService) UpdateBarangJualan(barang *domain.BarangJualan) er
 	return b.db.Save(barang).Error
 }
 
-func (b *barangJualanService) DeleteBarangJualan(barang *domain.BarangJualan) error {
-	return b.db.Delete(barang).Error
+func (b *barangJualanService) DeleteBarangJualan(id uint) error {
+	barang := &domain.BarangJualan{}
+	return b.db.Delete(barang, id).Error
+}
+
+func (b *barangJualanService) GetBarangJualanAll() ([]*domain.BarangJualan, error) {
+	barang := []*domain.BarangJualan{}
+	err := b.db.Find(&barang).Error
+	return barang, err
 }

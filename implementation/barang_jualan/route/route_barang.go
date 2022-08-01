@@ -14,5 +14,7 @@ func NewRouteBarang(r *gin.RouterGroup, db *gorm.DB) {
 	serviceToko := serviceToko.NewTokoSampahService(db)
 	handler := http.NewHandlerBarangJualan(service, serviceToko)
 	r.GET("/:id", middleware.ValidateJWToken(), handler.GetBarangJualanById)
+	r.GET("/all", middleware.ValidateJWToken(), handler.GetBarangJualanAll)
+	r.DELETE("/:id", middleware.ValidateJWToken(), handler.DeleteBarangJualan)
 	r.POST("/add", middleware.ValidateJWToken(), handler.CreateBarangJualan)
 }

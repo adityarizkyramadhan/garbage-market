@@ -81,3 +81,23 @@ func (h *handlerBarangJualan) GetBarangJualanById(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Success get barang jualan", barang))
 }
+
+func (h *handlerBarangJualan) GetBarangJualanAll(c *gin.Context) {
+	barang, err := h.service.GetBarangJualanAll()
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when get barang jualan", err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Success get barang jualan", barang))
+}
+
+func (h *handlerBarangJualan) DeleteBarangJualan(c *gin.Context) {
+	id := c.Param("id")
+	idInt, _ := strconv.Atoi(id)
+	err := h.service.DeleteBarangJualan(uint(idInt))
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when delete barang jualan", err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Success delete barang jualan", nil))
+}
