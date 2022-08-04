@@ -31,6 +31,7 @@ type TokoSampahService interface {
 	GetTokoSampahById(id uint) (*TokoSampah, error)
 	UpdateTokoSampah(toko *TokoSampah) error
 	GetTokoByIdUser(idUser uint) (*TokoSampah, error)
+	GetAllTokoSampah() ([]*TokoSampah, error)
 }
 
 type HandlerTokoSampah interface {
@@ -38,6 +39,7 @@ type HandlerTokoSampah interface {
 	GetTokoSampahById(c *gin.Context)
 	UpdateTokoSampah(c *gin.Context)
 	GetTokoByIdUser(c *gin.Context)
+	GetAllTokoSampah(c *gin.Context)
 }
 
 type BasketJualanService interface {

@@ -35,7 +35,7 @@ func (h *handlerBarangJualan) CreateBarangJualan(c *gin.Context) {
 	stokBarangInt, _ := strconv.Atoi(stokBarang)
 	fileInput, err := c.FormFile("file")
 	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when get file", err.Error()))
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when get file", err.Error()))
 		return
 	}
 	idUser := c.MustGet("id").(float64)
@@ -47,7 +47,7 @@ func (h *handlerBarangJualan) CreateBarangJualan(c *gin.Context) {
 	}
 	file, err := fileInput.Open()
 	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when open file", err.Error()))
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, utils.ResponseWhenFail("Error when open file", err.Error()))
 		return
 	}
 	client := storage_go.NewClient("https://jgjyjvyldoamqndazixl.supabase.co/storage/v1", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnanlqdnlsZG9hbXFuZGF6aXhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDc4MzQ0MDQsImV4cCI6MTk2MzQxMDQwNH0.WVMjJIRoK_cnyfRXdYvTokNWBCCqLWfbeu7xXeZrs6I", nil)

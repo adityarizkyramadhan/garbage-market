@@ -42,3 +42,9 @@ func (t *tokoSampahService) GetTokoByIdUser(idUser uint) (*domain.TokoSampah, er
 	err := t.db.Where("id_meta_user = ?", idUser).First(toko).Error
 	return toko, err
 }
+
+func (t *tokoSampahService) GetAllTokoSampah() ([]*domain.TokoSampah, error) {
+	toko := []*domain.TokoSampah{}
+	err := t.db.Preload("BarangJualans").Find(&toko).Error
+	return toko, err
+}

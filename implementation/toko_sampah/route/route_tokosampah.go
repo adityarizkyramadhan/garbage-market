@@ -15,4 +15,5 @@ func RouteTokoSampah(r *gin.RouterGroup, db *gorm.DB) {
 	r.POST("/updatetokosampah", middleware.ValidateJWToken(), handler.UpdateTokoSampah)
 	r.GET("/:id", middleware.ValidateJWToken(), handler.GetTokoSampahById)
 	r.GET("/user", middleware.ValidateJWToken(), handler.GetTokoByIdUser)
+	r.GET("/all", middleware.ValidateJWToken(), handler.GetAllTokoSampah)
 }

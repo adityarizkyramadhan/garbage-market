@@ -101,3 +101,12 @@ func (d *deliveryTokoSampah) GetTokoByIdUser(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Berhasil mengambil data toko sampah", data))
 }
+
+func (d *deliveryTokoSampah) GetAllTokoSampah(c *gin.Context) {
+	data, err := d.TokoSampahService.GetAllTokoSampah()
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
+		return
+	}
+	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Berhasil mengambil data toko sampah", data))
+}
