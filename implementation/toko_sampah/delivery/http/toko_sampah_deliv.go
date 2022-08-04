@@ -42,7 +42,6 @@ func (d *deliveryTokoSampah) CreateTokoSampah(c *gin.Context) {
 }
 
 func (d *deliveryTokoSampah) GetTokoSampahById(c *gin.Context) {
-	idUser := c.MustGet("id").(int)
 	idToko := c.Param("id")
 	id, err := strconv.Atoi(idToko)
 	if err != nil {
@@ -54,15 +53,11 @@ func (d *deliveryTokoSampah) GetTokoSampahById(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
 		return
 	}
-	if int(data.IdMetaUser) != idUser {
-		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail("Tidak dapat mengakses data toko sampah ini", nil))
-		return
-	}
 	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Berhasil mengambil data toko sampah", data))
 }
 
 func (d *deliveryTokoSampah) UpdateTokoSampah(c *gin.Context) {
-	idUser := c.MustGet("id").(int)
+	idUser := int(c.MustGet("id").(float64))
 	idToko := c.Param("id")
 	id, err := strconv.Atoi(idToko)
 	if err != nil {
