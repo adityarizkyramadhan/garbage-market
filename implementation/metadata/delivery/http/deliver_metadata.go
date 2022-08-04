@@ -94,3 +94,12 @@ func (d *deliveryMetadata) GetUserById(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Get user by id success", data))
 }
+
+func (d *deliveryMetadata) GetProfile(c *gin.Context) {
+	idUSer := uint(c.MustGet("id").(float64))
+	data, err := d.pg.GetUserById(idUSer)
+	if err != nil || data == nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), data))
+	}
+	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Get profile success", data))
+}

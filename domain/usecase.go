@@ -12,6 +12,7 @@ type HandlerMetaData interface {
 	Login(c *gin.Context)
 	Register(c *gin.Context)
 	GetUserById(c *gin.Context)
+	GetProfile(c *gin.Context)
 }
 
 type ServiceUser interface {
