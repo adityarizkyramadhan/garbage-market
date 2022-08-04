@@ -93,7 +93,7 @@ func (d *deliveryTokoSampah) UpdateTokoSampah(c *gin.Context) {
 }
 
 func (d *deliveryTokoSampah) GetTokoByIdUser(c *gin.Context) {
-	idUser := c.MustGet("id").(int)
+	idUser := int(c.MustGet("id").(float64))
 	data, err := d.TokoSampahService.GetTokoByIdUser(uint(idUser))
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), nil))
