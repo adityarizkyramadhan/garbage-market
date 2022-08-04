@@ -13,7 +13,7 @@ func RouteTokoSampah(r *gin.RouterGroup, db *gorm.DB) {
 	handler := http.NewDeliveryTokoSampah(service)
 	r.POST("/newtokosampah", middleware.ValidateJWToken(), handler.CreateTokoSampah)
 	r.POST("/updatetokosampah", middleware.ValidateJWToken(), handler.UpdateTokoSampah)
-	r.GET("/:id", middleware.ValidateJWToken(), handler.GetTokoSampahById)
+	r.GET("/id/:id", middleware.ValidateJWToken(), handler.GetTokoSampahById)
 	r.GET("/user", middleware.ValidateJWToken(), handler.GetTokoByIdUser)
 	r.GET("/all", middleware.ValidateJWToken(), handler.GetAllTokoSampah)
 }
