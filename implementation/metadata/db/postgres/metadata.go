@@ -30,6 +30,6 @@ func (m *metaDataService) Login(email string) (*domain.MetaUser, error) {
 
 func (m *metaDataService) GetUserById(id uint) (*domain.MetaUser, error) {
 	user := &domain.MetaUser{}
-	err := m.db.Preload("TokoSampah").Preload("BasketJualans").Preload("PembayaranUsers").First(user, id).Error
+	err := m.db.Preload("User").Preload("TokoSampah").Preload("BasketJualans").Preload("PembayaranUsers").First(user, id).Error
 	return user, err
 }

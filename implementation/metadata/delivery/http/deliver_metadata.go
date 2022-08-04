@@ -41,6 +41,10 @@ func (d *deliveryMetadata) Login(c *gin.Context) {
 		return
 	}
 	token, err := middleware.GenerateJWToken(data.ID)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, utils.ResponseWhenFail(err.Error(), nil))
+		return
+	}
 	c.JSON(http.StatusOK, utils.ResponseWhenSuccess("Login success", gin.H{
 		"token": token,
 	}))
