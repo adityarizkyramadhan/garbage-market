@@ -6,7 +6,6 @@ type MetaUser struct {
 	gorm.Model
 	Email           string           `json:"email"`
 	Password        string           `json:"-"`
-	Pin             string           `json:"pin"`
 	User            User             `gorm:"foreignkey:IdMetaUser"`
 	TokoSampah      TokoSampah       `gorm:"foreignkey:IdMetaUser"`
 	PembayaranUsers []PembayaranUser `gorm:"foreignkey:IdMetaUser"`

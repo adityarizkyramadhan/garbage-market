@@ -66,7 +66,6 @@ func (d *deliveryMetadata) Register(c *gin.Context) {
 	data, err := d.pg.Register(&domain.MetaUser{
 		Email:    input.Email,
 		Password: string(hashedPass),
-		Pin:      input.Pin,
 	})
 	if err != nil || data == nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, utils.ResponseWhenFail(err.Error(), data))
